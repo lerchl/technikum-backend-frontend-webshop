@@ -2,7 +2,7 @@ package at.technikumwien.webshop.model;
 
 public class Product {
 
-    private final int id;
+    private final long id;
     private final String name;
     private final String description;
     private final double price;
@@ -11,7 +11,7 @@ public class Product {
     // Init
     // /////////////////////////////////////////////////////////////////////////
 
-    public Product(int id, String name, String description, double price) {
+    public Product(long id, String name, String description, double price) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -22,7 +22,7 @@ public class Product {
     // Getters
     // /////////////////////////////////////////////////////////////////////////
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
