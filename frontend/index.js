@@ -1,5 +1,3 @@
-console.log("Hello from frontend/index.js");
-
 $("#getProductsButton").on("click", function(e) {
     // $("#productsContainer").append("Hello World!");
     $.ajax({
