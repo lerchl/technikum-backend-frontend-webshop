@@ -11,7 +11,7 @@ public class Product {
     @Id
     @GeneratedValue
     @Column(name = "id")
-    private final Long id;
+    private Long id;
 
     @Column(name = "name")
     private String name;
@@ -45,11 +45,13 @@ public class Product {
         this.type = type;
     }
 
+    public Product() {
+        // noop
+    }
+
     // /////////////////////////////////////////////////////////////////////////
     // Getters and Setters
     // /////////////////////////////////////////////////////////////////////////
-
-    
 
     public Long getId() {
         return id;
