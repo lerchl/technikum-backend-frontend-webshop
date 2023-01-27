@@ -3,10 +3,11 @@ package at.technikumwien.webshop.repository;
 import java.util.List;
 
 import at.technikumwien.webshop.model.Product;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public interface ProductRepository {
+@Repository
+public interface ProductRepository extends JpaRepository<Product, Long> {
 
-    List<Product> findAll();
-
-    List<Product> findAllByType(String type);
+    List<Product> findByType(String type);
 }
