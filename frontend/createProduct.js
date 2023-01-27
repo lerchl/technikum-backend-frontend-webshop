@@ -1,4 +1,8 @@
+// hier wird dem Element mit der Id "createProductButton" ein listener
+// für das onclick-Event hinzugefügt
 $("#createProductButton").on("click", _e => {
+    // wir erstellen ein object und setzen die 
+    // Werte aus den Eingabefeldern
     const product = {
         "name": $("#nameInput").val(),
         "description": $("#descriptionInput").val(),
@@ -8,6 +12,8 @@ $("#createProductButton").on("click", _e => {
         "type": $("#typeInput").val()
     }
 
+    // dann senden wir eine POST request mit dem neuen
+    // product als json string an das backend
     $.ajax({
         url: "http://localhost:8080/products",
         type: "POST",
