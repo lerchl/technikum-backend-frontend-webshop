@@ -3,6 +3,7 @@ package at.technikumwien.webshop.controller;
 import java.net.URI;
 import java.util.List;
 
+import at.technikumwien.webshop.dto.ProductDTO;
 import at.technikumwien.webshop.model.Product;
 import at.technikumwien.webshop.service.ProductService;
 import org.springframework.http.ResponseEntity;
@@ -43,13 +44,26 @@ public class ProductController {
     }
 
     @PostMapping
-    public ResponseEntity<Product> createProduct(@RequestBody Product product) {
-        product = service.save(product);
+    public ResponseEntity<Product> createProduct(@RequestBody ProductDTO productDTO) {
+        Product product = service.save(fromDTO(productDTO), productDTO.getTaxRateId());
         return ResponseEntity.created(URI.create("http://localhost:8080/products")).body(product);
     }
 
     @PutMapping("/setActive/{id}")
     public Product setActive(@PathVariable Long id) {
         return service.setActive(id);
+    }
+
+    // /////////////////////////////////////////////////////////////////////////
+    // Util
+    // /////////////////////////////////////////////////////////////////////////
+
+    private static Product fromDTO(ProductDTO productDTO) {
+        return new Product(productDTO.getName(),
+                           productDTO.getDescription(),
+                           productDTO.getImageUrl(),
+                           productDTO.getPrice(),
+                           productDTO.getQuantity(),
+                           productDTO.getType());
     }
 }

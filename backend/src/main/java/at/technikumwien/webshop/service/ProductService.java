@@ -4,19 +4,22 @@ import java.util.List;
 
 import at.technikumwien.webshop.model.Product;
 import at.technikumwien.webshop.repository.ProductRepository;
+import at.technikumwien.webshop.repository.TaxRateRepository;
 import org.springframework.stereotype.Service;
 
 @Service
 public class ProductService {
 
-    private ProductRepository repository;
+    private ProductRepository productRepository;
+    private TaxRateRepository taxRateRepository;
 
     // /////////////////////////////////////////////////////////////////////////
     // Init
     // /////////////////////////////////////////////////////////////////////////
 
-    public ProductService(ProductRepository repository) {
-        this.repository = repository;
+    public ProductService(ProductRepository repository, TaxRateRepository taxRateRepository) {
+        this.productRepository = repository;
+        this.taxRateRepository = taxRateRepository;
     }
 
     // /////////////////////////////////////////////////////////////////////////
@@ -24,19 +27,30 @@ public class ProductService {
     // /////////////////////////////////////////////////////////////////////////
 
     public List<Product> findAll() {
-        return repository.findAll();
+        return productRepository.findAll();
     }
 
     public List<Product> findByType(String type) {
-        return repository.findByType(type);
+        return productRepository.findByType(type);
     }
 
     public Product save(Product product) {
-        return repository.save(product);
-    } 
+        return productRepository.save(product);
+    }
+
+    public Product save(Product product, Long taxRateId) {
+        var taxRate = taxRateRepository.findById(taxRateId);
+
+        if (taxRate.isEmpty()) {
+            throw new EntityNotFoundException();
+        }
+
+        product.setTaxRate(taxRate.get());
+        return save(product);
+    }
 
     public Product setActive(Long id) {
-        var product = repository.findById(id);
+        var product = productRepository.findById(id);
 
         if (product.isEmpty()) {
             throw new EntityNotFoundException();

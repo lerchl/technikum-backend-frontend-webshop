@@ -1,64 +1,21 @@
-package at.technikumwien.webshop.model;
+package at.technikumwien.webshop.dto;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import at.technikumwien.webshop.model.Product;
 
 /**
- * Der hier angegebene Name bestimmt den Namen der Tabelle in der Datenbank.
+ * DTO for {@link Product}
  */
-@Entity(name = "product")
-public class Product {
-    
-    @Id
-    @GeneratedValue
-    @Column(name = "id")
+public class ProductDTO {
+
     private Long id;
-
-    @Column(name = "name")
     private String name;
-
-    @Column(name = "description")
     private String description;
-
-    @Column(name = "image_url")
     private String imageUrl;
-
-    @Column(name = "price")
     private double price;
-
-    @Column(name = "quantity")
     private int quantity;
-
-    @Column(name = "type")
     private String type;
-
-    @Column(name = "active")
     private boolean active;
-
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "tax_rate_id", nullable = false)
-    private TaxRate taxRate;
-
-    // /////////////////////////////////////////////////////////////////////////
-    // Init
-    // /////////////////////////////////////////////////////////////////////////
-
-    public Product(String name, String description, String imageUrl, double price, int quantity, String type) {
-        this.name = name;
-        this.description = description;
-        this.imageUrl = imageUrl;
-        this.price = price;
-        this.quantity = quantity;
-        this.type = type;
-    }
-
-    public Product() {
-        // noop
-    }
+    private Long taxRateId;
 
     // /////////////////////////////////////////////////////////////////////////
     // Getters and Setters
@@ -66,6 +23,10 @@ public class Product {
 
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -124,11 +85,11 @@ public class Product {
         this.active = active;
     }
 
-    public TaxRate getTaxRate() {
-        return taxRate;
+    public Long getTaxRateId() {
+        return taxRateId;
     }
 
-    public void setTaxRate(TaxRate taxRate) {
-        this.taxRate = taxRate;
+    public void setTaxRateId(Long taxRateId) {
+        this.taxRateId = taxRateId;
     }
 }
