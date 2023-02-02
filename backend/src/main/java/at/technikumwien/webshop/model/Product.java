@@ -34,6 +34,8 @@ public class Product {
     @Column(name = "type")
     private String type;
 
+    private boolean active;
+
     // /////////////////////////////////////////////////////////////////////////
     // Init
     // /////////////////////////////////////////////////////////////////////////
@@ -106,5 +108,13 @@ public class Product {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 }
