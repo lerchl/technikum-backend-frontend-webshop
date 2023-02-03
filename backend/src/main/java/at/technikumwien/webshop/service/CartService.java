@@ -1,42 +1,27 @@
 package at.technikumwien.webshop.service;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import at.technikumwien.webshop.model.Cart;
-import at.technikumwien.webshop.model.Product;
 import at.technikumwien.webshop.repository.CartRepository;
-import at.technikumwien.webshop.repository.ProductRepository;
 import org.springframework.stereotype.Service;
 
 @Service
 public class CartService {
     
     private CartRepository cartRepository;
-    private ProductRepository productRepository;
 
-    public CartService(CartRepository cartRepository, ProductRepository productRepository) {
+    public CartService(CartRepository cartRepository) {
         this.cartRepository = cartRepository;
-        this.productRepository = productRepository;
     }
 
     // /////////////////////////////////////////////////////////////////////////
     // Methods
     // /////////////////////////////////////////////////////////////////////////
 
-    public Cart save(Long[] productIds) {
-        Set<Product> products = new HashSet<>();
+    public Cart save(Cart cart) {
+        return cartRepository.save(cart);
+    }
 
-        for (Long id : productIds) {
-            var product = productRepository.findById(id);
-
-            if (product.isEmpty()) {
-                throw new EntityNotFoundException();
-            }
-
-            products.add(product.get());
-        }
-
-        return cartRepository.save(new Cart(products));
+    public Cart findByUserId(Long userId) {
+        return cartRepository.findByUserId(userId);
     }
 }

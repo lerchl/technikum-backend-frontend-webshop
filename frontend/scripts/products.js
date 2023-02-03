@@ -46,6 +46,17 @@ function createProduct(product) {
 }
 
 function addProductToCart(product, quantity) {
-    console.log(product);
-    console.log(quantity);
+    const data = {
+        productId: product.id,
+        quantity: quantity
+    }
+
+    $.post({
+        url: "http://localhost:8080/positions",
+        cors: true,
+        contentType: "application/json",
+        data: JSON.stringify(data),
+        success: console.log,
+        error: console.error
+    });
 }

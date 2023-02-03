@@ -22,7 +22,7 @@ public class CartController {
 
     @ResponseStatus(code = CREATED)
     @PostMapping
-    public Cart create(@RequestBody Long[] productIds) {
-        return cartService.save(productIds);
+    public Cart create(@RequestBody Cart cart) {
+        return cartService.save(cart);
     }
 }

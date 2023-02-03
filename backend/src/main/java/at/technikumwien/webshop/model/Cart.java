@@ -2,13 +2,14 @@ package at.technikumwien.webshop.model;
 
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 
 @Entity(name = "cart")
 public class Cart {
@@ -18,11 +19,13 @@ public class Cart {
     @Column(name = "id")
     private Long id;
 
-    @ManyToMany
-    @JoinTable(name = "cart_product",
-            joinColumns = @JoinColumn(name = "carts_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "products_id", referencedColumnName = "id"))
-    private Set<Product> products;
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = true)
+    private User user;
+
+    @OneToMany(mappedBy = "cart")
+    @JsonBackReference
+    private Set<Position> positions;
 
     // /////////////////////////////////////////////////////////////////////////
     // Init
@@ -32,8 +35,8 @@ public class Cart {
         // default constructor for jpa
     }
 
-    public Cart(Set<Product> products) {
-        this.products = products;
+    public Cart(User user) {
+        this.user = user;
     }
 
     // /////////////////////////////////////////////////////////////////////////
@@ -44,11 +47,19 @@ public class Cart {
         return id;
     }
 
-    public Set<Product> getProducts() {
-        return products;
+    public User getUser() {
+        return user;
     }
 
-    public void setProducts(Set<Product> products) {
-        this.products = products;
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Set<Position> getPositions() {
+        return positions;
+    }
+
+    public void setPositions(Set<Position> positions) {
+        this.positions = positions;
     }
 }
