@@ -6,6 +6,7 @@ import java.util.List;
 import at.technikumwien.webshop.dto.ProductDTO;
 import at.technikumwien.webshop.model.Product;
 import at.technikumwien.webshop.service.ProductService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -44,7 +45,7 @@ public class ProductController {
     }
 
     @PostMapping
-    public ResponseEntity<Product> createProduct(@RequestBody ProductDTO productDTO) {
+    public ResponseEntity<Product> createProduct(@RequestBody @Valid ProductDTO productDTO) {
         Product product = service.save(fromDTO(productDTO), productDTO.getTaxRateId());
         return ResponseEntity.created(URI.create("http://localhost:8080/products")).body(product);
     }

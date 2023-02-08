@@ -1,6 +1,12 @@
 package at.technikumwien.webshop.dto;
 
 import at.technikumwien.webshop.model.Product;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PositiveOrZero;
+import org.hibernate.validator.constraints.Length;
 
 /**
  * DTO for {@link Product}
@@ -8,13 +14,25 @@ import at.technikumwien.webshop.model.Product;
 public class ProductDTO {
 
     private Long id;
+
+    @NotBlank
+    @Length(min = 4, max = 100)
     private String name;
+
     private String description;
     private String imageUrl;
+
+    @DecimalMin("0.01")
     private double price;
+
+    @Min(1)
     private int quantity;
+
     private String type;
     private boolean active;
+
+    @NotNull
+    @PositiveOrZero
     private Long taxRateId;
 
     // /////////////////////////////////////////////////////////////////////////
