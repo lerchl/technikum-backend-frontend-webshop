@@ -3,6 +3,7 @@ package at.technikumwien.webshop.controller;
 import at.technikumwien.webshop.dto.PositionDTO;
 import at.technikumwien.webshop.model.Position;
 import at.technikumwien.webshop.service.PositionService;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,7 +32,7 @@ public class PositionController {
 
     @PostMapping
     @ResponseStatus(code = CREATED)
-    public Position createPosition(@RequestBody PositionDTO positionDTO) {
+    public Position createPosition(@RequestBody @Valid PositionDTO positionDTO) {
         return positionService.save(fromDTO(positionDTO), 0L, positionDTO.getProductId());
     }
 
