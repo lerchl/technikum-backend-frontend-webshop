@@ -3,3 +3,14 @@
     top: 10px;
     right: 10px;
 }
+
+.input-error {
+    border: 2px solid red;
+}
+
+.error-message {
+    margin-bottom: 0;
+    font-size: 0.75rem;
+    color: red;
+    text-align: right;
+}
