@@ -1,6 +1,10 @@
-$.get({
+$.ajax({
     url: "http://localhost:8080/products",
     cors: true,
+    xhrFields: {
+        withCredentials: true
+    },
+    crossDomain: true,
     success: function(products) { addProductsToPage(products) },
     error: function(error) { console.error(error) }
 });
