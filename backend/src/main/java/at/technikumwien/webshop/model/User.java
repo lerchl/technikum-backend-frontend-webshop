@@ -7,7 +7,7 @@ import jakarta.persistence.Id;
 
 @Entity(name = "user")
 public class User {
-    
+
     @Id
     @GeneratedValue
     @Column(name = "id")
@@ -15,6 +15,9 @@ public class User {
 
     @Column(name = "username", nullable = false)
     private String username;
+
+    @Column(name = "password", nullable = false)
+    private String password;
 
     // /////////////////////////////////////////////////////////////////////////
     // Getters and Setters
