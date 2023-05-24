@@ -8,6 +8,7 @@ import at.technikumwien.webshop.model.Product;
 import at.technikumwien.webshop.service.ProductService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -45,6 +46,7 @@ public class ProductController {
     }
 
     @PostMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Product> createProduct(@RequestBody @Valid ProductDTO productDTO) {
         Product product = service.save(fromDTO(productDTO), productDTO.getTaxRateId());
         return ResponseEntity.created(URI.create("http://localhost:8080/products")).body(product);
