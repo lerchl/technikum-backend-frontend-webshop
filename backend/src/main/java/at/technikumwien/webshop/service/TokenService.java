@@ -42,14 +42,14 @@ public class TokenService {
                 .compact();
     }
 
-    public Optional<UserPrincipal> parseToken(String token) {
+    public Optional<UserPrincipal> parseToken(String jwt) {
         Jws<Claims> jwsClaims;
 
         try {
             jwsClaims = Jwts.parserBuilder()
                     .setSigningKey(JWT_SECRET.getEncoded())
                     .build()
-                    .parseClaimsJws(token);
+                    .parseClaimsJws(jwt);
         } catch (SignatureException e) {
             return Optional.empty();
         }
