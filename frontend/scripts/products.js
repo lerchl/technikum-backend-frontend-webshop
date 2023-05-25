@@ -1,10 +1,7 @@
 $.ajax({
     url: "http://localhost:8080/products",
     cors: true,
-    xhrFields: {
-        withCredentials: true
-    },
-    crossDomain: true,
+    headers: { "Authorization": sessionStorage.getItem("token") },
     success: function(products) { addProductsToPage(products) },
     error: function(error) { console.error(error) }
 });
@@ -57,6 +54,7 @@ function addProductToCart(product, quantity) {
 
     $.post({
         url: "http://localhost:8080/positions",
+        headers: { "Authorization": sessionStorage.getItem("token") },
         cors: true,
         contentType: "application/json",
         data: JSON.stringify(data),

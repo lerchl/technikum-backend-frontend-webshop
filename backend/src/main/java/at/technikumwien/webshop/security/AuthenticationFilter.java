@@ -2,14 +2,12 @@ package at.technikumwien.webshop.security;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
 import at.technikumwien.webshop.service.TokenService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -38,23 +36,17 @@ public class AuthenticationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
-        // Request does not contain any cookies
-        if (request.getCookies() == null) {
-            filterChain.doFilter(request, response);
-            return;
-        }
+        // Get authorization header
+        String bearer = request.getHeader("Authorization");
 
-        // Find JWT cookie
-        Optional<Cookie> jwtCookie = Arrays.stream(request.getCookies()).filter(cookie -> cookie.getName().equals("jwt")).findFirst();
-
-        // JWT cookie not present
-        if (jwtCookie.isEmpty() || jwtCookie.get().getValue() == null) {
+        // Request does not contain authorization header or authorization header is not bearer
+        if (bearer == null || !bearer.startsWith("Bearer ")) {
             filterChain.doFilter(request, response);
             return;
         }
 
         // Create authorization token
-        Optional<UsernamePasswordAuthenticationToken> authToken = createAuthToken(jwtCookie.get().getValue());
+        Optional<UsernamePasswordAuthenticationToken> authToken = createAuthToken(bearer.split(" ")[1]);
 
         // JWT is invalid, auth token could not be created
         if (authToken.isEmpty()) {

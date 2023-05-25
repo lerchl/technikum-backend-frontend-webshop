@@ -1,6 +1,7 @@
 $.get({
     url: "http://localhost:8080/taxRates",
     cors: true,
+    headers: { "Authorization": sessionStorage.getItem("token") },
     // wenn die request erfolgreich war, wird die Funktion
     // addTaxRatesToSelect aufgerufen und die taxRates werden
     // als parameter übergeben
@@ -46,6 +47,7 @@ $("#createProductButton").on("click", _e => {
         url: "http://localhost:8080/products",
         type: "POST",
         cors: true,
+        headers: { "Authorization": sessionStorage.getItem("token") },
         contentType: "application/json",
         data: JSON.stringify(product),
         success: console.log,
